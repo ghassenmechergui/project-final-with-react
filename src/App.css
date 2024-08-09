@@ -1,0 +1,132 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+.header-rigth{
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+width: 8em;
+font-size: 1.1em;
+
+}
+.content{
+    padding: 10px;
+}
+.apploder{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+
+
+}
+.user h2,
+.apploder h2 ,
+.login h2 ,
+.header h3
+{
+    color: #ff0050;
+    margin: 30px 0;
+    font-size: 40px;
+
+}
+.apploder h1{
+    border: 7px solid #1dcaff;
+    color: #1dcaff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30%;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    font-size: 40px;
+    animation: h 3s linear infinite;
+}
+.apploder span {
+    border: 7px solid #ff0050;
+    border-radius: 30%;
+    width:  70px;
+    height: 70px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: gh 1.5s linear infinite;
+    
+}
+.user h2::first-letter,
+.login h2::first-letter,
+.header h3::first-letter,
+.apploder h2::first-letter{
+    color: #1dcaff;
+    
+}
+.apploder .letter{
+    animation: h 3s linear infinite;
+}
+@keyframes h{
+    to{
+        transform: rotate(-360deg);
+    }
+}
+@keyframes gh{
+    to{
+        transform: rotate(360deg);
+    }
+}
+.content-login{
+    display: flex;
+    justify-content: center;
+    flex-direction:  column;
+    align-items: center;
+}
+.login h2{
+    margin-top: 80px;
+}
+.content-login div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+   
+}
+.loginforme:nth-child(1){
+   border-radius: 25px;
+}
+.tt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+}
+.list-user{
+    padding: 50px 30px !important;
+}
+.li-user{
+    background-color: rgba(31, 203, 255 , 0.3) !important;
+    border-radius: 10px !important;
+    margin-top: 20px !important;
+    padding: 13px !important;
+
+}
+.deconnecte{
+    position: absolute;
+    left: 0;
+    bottom: 150px;
+    width: 100%;
+    padding: 0 40px;
+    
+}
