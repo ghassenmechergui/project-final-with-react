@@ -19,9 +19,11 @@ export default function Login() {
         console.log(response.data);
         localStorage.setItem("user", JSON.stringify(response.data));
         let users = JSON.parse(localStorage.getItem("users")) || [];
-        users.unshift(response.data);
-        users[0].user.info = inputLogin;
-        localStorage.setItem("users", JSON.stringify(users));
+        users.push(response.data);
+        response.data.user.info = inputLogin;
+        const uniUser = [...new Map(users.map((e) => [e.user.id, e])).values()];
+
+        localStorage.setItem("users", JSON.stringify(uniUser.reverse()));
         setInputLogin({
           username: "",
           password: "",
@@ -31,10 +33,7 @@ export default function Login() {
   }
   return (
     <div className=" login">
-      <Link>
-        <ArrowBackIcon style={{ fontSize: "40px", margin: "20px" }} />
-      </Link>
-      <div className=" content-login">
+      <div className=" content-login " style={{ marginTop: "80px" }}>
         <h2> Astro</h2>
 
         <div

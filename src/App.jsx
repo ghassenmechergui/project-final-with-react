@@ -12,6 +12,7 @@ import Login from "./compent/Login";
 import Register from "./compent/Register";
 // context posts
 import PostsProvider from "./context/ContextPosts";
+import Newpost from "./compent/Newpost";
 
 function App() {
   const theme = createTheme({
@@ -37,6 +38,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<First />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/newPost" element={<Newpost />} />
           </Routes>
         </ThemeProvider>
       </PostsProvider>

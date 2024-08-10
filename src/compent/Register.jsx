@@ -45,7 +45,7 @@ export default function () {
   return (
     <div>
       <div className=" login">
-        <Link>
+        <Link to={"/login"}>
           <ArrowBackIcon style={{ fontSize: "40px", margin: "20px" }} />
         </Link>
         <div className=" content-login">

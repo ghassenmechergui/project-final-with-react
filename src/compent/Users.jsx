@@ -17,8 +17,9 @@ export default function Users() {
   function login(e) {
     console.log(e);
     axios
-      .post("https://tarmeezacademy.com/api/v1/login", e)
+      .post("https://tarmeezacademy.com/api/v1/login", e.user.info)
       .then((response) => {
+        console.log(response.data);
         localStorage.setItem("user", JSON.stringify(response.data));
         navigate("/home");
       });
@@ -36,11 +37,12 @@ export default function Users() {
         </div>
         <div className="list-user">
           {users.map((e) => {
+            console.log(e);
             return (
               <ListItemButton
                 className="li-user"
                 onClick={() => {
-                  login(e.user.info);
+                  login(e);
                 }}
               >
                 <ListItemAvatar>

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 // compont import
 import Post from "./Post";
@@ -19,8 +19,16 @@ import PermMediaIcon from "@mui/icons-material/PermMedia";
 import Input from "@mui/material/Input";
 import Avatar from "@mui/material/Avatar";
 import { styled } from "@mui/material/styles";
+import SendIcon from "@mui/icons-material/Send";
 export default function Home() {
   const { posts, dispatch } = usePosts();
+
+  const [inputPost, setInputPost] = useState({
+    title: "",
+    body: "",
+    image: "",
+  });
+
   const user = JSON.parse(localStorage.getItem("user")) || "";
   useEffect(() => {
     let cancelAxios = null;
@@ -52,6 +60,28 @@ export default function Home() {
     whiteSpace: "nowrap",
     width: 1,
   });
+  function addPoste() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    let formData = new FormData();
+    formData.append("title", inputPost.title);
+    formData.append("body", inputPost.body);
+    formData.append("image", inputPost.image);
+
+    const param = {
+      ContentType: "multipart/form-data",
+      authorization: `Bearer ${user.token}`,
+    };
+    axios
+      .post("https://tarmeezacademy.com/api/v1/posts", formData, {
+        headers: param,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   return (
     <div>
       <div className=" header">
@@ -74,8 +104,8 @@ export default function Home() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "10px",
-          margin: "0 10px",
+
+          margin: "18px 10px",
         }}
       >
         <Avatar
@@ -83,7 +113,17 @@ export default function Home() {
           src={user.user.profile_image || ""}
           sx={{ width: 46, height: 46 }}
         />
-        <Input placeholder="text" inputProps={ariaLabel} />
+        <Link to={"/newPost"}>
+          <Input
+            fullWidth
+            placeholder="text"
+            inputProps={ariaLabel}
+            value={inputPost.body}
+            onChange={(e) => {
+              setInputPost({ ...inputPost, body: e.target.value });
+            }}
+          />
+        </Link>
         <Button
           component="label"
           role={undefined}
@@ -91,7 +131,17 @@ export default function Home() {
           tabIndex={-1}
           startIcon={<PermMediaIcon />}
         >
-          <VisuallyHiddenInput type="file" />
+          <VisuallyHiddenInput
+            type="file"
+            onChange={(e) => {
+              console.log(e.target.result);
+              setInputPost({
+                ...inputPost,
+                image: e.target.files[0],
+              });
+            }}
+            files={inputPost.image}
+          />
         </Button>
       </div>
       <Divider />
