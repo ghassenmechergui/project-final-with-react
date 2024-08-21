@@ -28,7 +28,10 @@ export default function Post(props) {
               height={40}
             />
           ) : (
-            <Avatar alt={post.author.name} src={post.author.profile_image} />
+            <Avatar
+              alt={post.author.name}
+              src={post.author.profile_image || ""}
+            />
           )
         }
         title={
@@ -71,7 +74,7 @@ export default function Post(props) {
         <Skeleton sx={{ height: 190 }} animation="wave" variant="rectangular" />
       ) : (
         <>
-          <CardMedia component="img" height="140" image={post.image} />
+          <CardMedia component="img" height="140" image={post.image || ""} />
         </>
       )}
 

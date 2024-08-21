@@ -33,7 +33,7 @@ export default function Login() {
   }
   return (
     <div className=" login">
-      <div className=" content-login " style={{ marginTop: "80px" }}>
+      <div className=" content-login " style={{ marginTop: "50px" }}>
         <h2> Astro</h2>
 
         <div
@@ -76,7 +76,7 @@ export default function Login() {
             variant="outlined"
             disableElevation
             fullWidth
-            style={{ marginTop: "200px", borderRadius: "15px" }}
+            style={{ marginTop: "190px", borderRadius: "15px" }}
             onClick={() => {
               navigate("/register");
             }}

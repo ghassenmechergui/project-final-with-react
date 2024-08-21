@@ -19,21 +19,21 @@ import PermMediaIcon from "@mui/icons-material/PermMedia";
 import Input from "@mui/material/Input";
 import Avatar from "@mui/material/Avatar";
 import { styled } from "@mui/material/styles";
-import SendIcon from "@mui/icons-material/Send";
+
+import { useImage } from "../context/contextImage";
+import Pagenetion from "./Pagenetion";
 export default function Home() {
   const { posts, dispatch } = usePosts();
-
-  const [inputPost, setInputPost] = useState({
-    title: "",
-    body: "",
-    image: "",
+  const [counter, setCounter] = useState({
+    counter: 1,
+    state: true,
   });
 
   const user = JSON.parse(localStorage.getItem("user")) || "";
   useEffect(() => {
     let cancelAxios = null;
     axios
-      .get("https://tarmeezacademy.com/api/v1/posts", {
+      .get(`https://tarmeezacademy.com/api/v1/posts?page=${counter.counter}`, {
         cancelToken: new axios.CancelToken((c) => {
           console.log("deconnected");
           cancelAxios = c;
@@ -60,28 +60,39 @@ export default function Home() {
     whiteSpace: "nowrap",
     width: 1,
   });
-  function addPoste() {
-    const user = JSON.parse(localStorage.getItem("user"));
-    let formData = new FormData();
-    formData.append("title", inputPost.title);
-    formData.append("body", inputPost.body);
-    formData.append("image", inputPost.image);
 
-    const param = {
-      ContentType: "multipart/form-data",
-      authorization: `Bearer ${user.token}`,
-    };
-    axios
-      .post("https://tarmeezacademy.com/api/v1/posts", formData, {
-        headers: param,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const { imageurl, setimageurl } = useImage();
+  function hindelInputDaylouied(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setimageurl(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
   }
+
+  window.onscroll = function () {
+    let heigth =
+      document.documentElement.scrollHeight -
+      document.documentElement.clientHeight;
+    let scrollTop = document.documentElement.scrollTop;
+    let end = scrollTop / heigth;
+
+    if (end > 0.999 && counter.state == true) {
+      setCounter({ ...counter, state: false });
+      axios
+        .get(`https://tarmeezacademy.com/api/v1/posts?page=${counter + 1}`)
+        .then((response) => {
+          console.log(response);
+          setCounter({ ...counter, state: false });
+          dispatch({ type: "next", payloed: { posts: response.data.data } });
+          setCounter({ ...counter, counter: counter.counter + 1 });
+        });
+    }
+  };
+
   return (
     <div>
       <div className=" header">
@@ -108,21 +119,9 @@ export default function Home() {
           margin: "18px 10px",
         }}
       >
-        <Avatar
-          alt={user.user.name || "A"}
-          src={user.user.profile_image || ""}
-          sx={{ width: 46, height: 46 }}
-        />
+        <Avatar alt={user.user.name || "A"} sx={{ width: 46, height: 46 }} />
         <Link to={"/newPost"}>
-          <Input
-            fullWidth
-            placeholder="text"
-            inputProps={ariaLabel}
-            value={inputPost.body}
-            onChange={(e) => {
-              setInputPost({ ...inputPost, body: e.target.value });
-            }}
-          />
+          <Input fullWidth placeholder="text" inputProps={ariaLabel} />
         </Link>
         <Button
           component="label"
@@ -134,17 +133,13 @@ export default function Home() {
           <VisuallyHiddenInput
             type="file"
             onChange={(e) => {
-              console.log(e.target.result);
-              setInputPost({
-                ...inputPost,
-                image: e.target.files[0],
-              });
+              hindelInputDaylouied(e);
             }}
-            files={inputPost.image}
           />
         </Button>
       </div>
       <Divider />
+
       <div className="content">
         <div style={{ display: posts == null ? "block" : "none" }}>
           <Post loading />
@@ -156,6 +151,7 @@ export default function Home() {
               return <Post key={e.id} post={e} />;
             })}
       </div>
+      <Pagenetion />
     </div>
   );
 }

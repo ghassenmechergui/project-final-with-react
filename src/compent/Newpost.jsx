@@ -11,6 +11,8 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
 import { useState } from "react";
+import { useImage } from "../context/contextImage";
+import axios from "axios";
 export default function Newpost() {
   const user = JSON.parse(localStorage.getItem("user"));
   const VisuallyHiddenInput = styled("input")({
@@ -24,7 +26,12 @@ export default function Newpost() {
     whiteSpace: "nowrap",
     width: 1,
   });
-  const [imageurl, setimageurl] = useState(null);
+  const { imageurl, setimageurl } = useImage();
+  const [inputPost, setInputPost] = useState({
+    title: "",
+    body: "",
+    image: "",
+  });
   function hindelInputDaylouied(e) {
     const file = e.target.files[0];
     if (file) {
@@ -34,6 +41,28 @@ export default function Newpost() {
       };
       reader.readAsDataURL(file);
     }
+  }
+  function addPoste() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    let formData = new FormData();
+    formData.append("title", inputPost.title);
+    formData.append("body", inputPost.body);
+    formData.append("image", inputPost.image);
+
+    const param = {
+      ContentType: "multipart/form-data",
+      authorization: `Bearer ${user.token}`,
+    };
+    axios
+      .post("https://tarmeezacademy.com/api/v1/posts", formData, {
+        headers: param,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   return (
     <div>
@@ -60,9 +89,13 @@ export default function Newpost() {
           <VisuallyHiddenInput
             type="file"
             onChange={(e) => {
-              console.log(e.target.result);
               hindelInputDaylouied(e);
+              setInputPost({
+                ...inputPost,
+                image: e.target.files[0],
+              });
             }}
+            files={inputPost.image}
           />
         </Button>
       </ListItemButton>
@@ -76,6 +109,10 @@ export default function Newpost() {
         multiline
         rows={8}
         defaultValue=""
+        value={inputPost.body}
+        onChange={(e) => {
+          setInputPost({ ...inputPost, body: e.target.value });
+        }}
       />
       <div>
         <Card
@@ -104,6 +141,7 @@ export default function Newpost() {
           disableElevation
           fullWidth
           style={{ marginTop: "40px ", borderRadius: "15px" }}
+          onClick={addPoste}
         >
           publie
         </Button>

@@ -12,6 +12,7 @@ import Login from "./compent/Login";
 import Register from "./compent/Register";
 // context posts
 import PostsProvider from "./context/ContextPosts";
+import ProviderImage from "./context/contextImage";
 import Newpost from "./compent/Newpost";
 
 function App() {
@@ -29,18 +30,20 @@ function App() {
   return (
     <>
       <PostsProvider>
-        <ThemeProvider theme={theme}>
-          <Routes>
-            <Route path="/home" element={<Home />} />
-            <Route path="/commenter" element={<Comment />} />
-            <Route path="/profile" element={<Profil />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<First />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/newPost" element={<Newpost />} />
-          </Routes>
-        </ThemeProvider>
+        <ProviderImage>
+          <ThemeProvider theme={theme}>
+            <Routes>
+              <Route path="/home" element={<Home />} />
+              <Route path="/commenter" element={<Comment />} />
+              <Route path="/profile" element={<Profil />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<First />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/newPost" element={<Newpost />} />
+            </Routes>
+          </ThemeProvider>
+        </ProviderImage>
       </PostsProvider>
     </>
   );
