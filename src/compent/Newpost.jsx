@@ -12,9 +12,11 @@ import { styled } from "@mui/material/styles";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
 import { useState } from "react";
 import { useImage } from "../context/contextImage";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 export default function Newpost() {
   const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
     clipPath: "inset(50%)",
@@ -58,7 +60,7 @@ export default function Newpost() {
         headers: param,
       })
       .then((response) => {
-        console.log(response);
+        navigate("/home");
       })
       .catch((error) => {
         console.log(error);
