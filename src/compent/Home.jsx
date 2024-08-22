@@ -35,12 +35,10 @@ export default function Home() {
     axios
       .get(`https://tarmeezacademy.com/api/v1/posts?page=${counter.counter}`, {
         cancelToken: new axios.CancelToken((c) => {
-          console.log("deconnected");
           cancelAxios = c;
         }),
       })
       .then((response) => {
-        console.log("connected");
         dispatch({ type: "start", payloed: { posts: response.data.data } });
       });
 
@@ -109,7 +107,7 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      <Divider />
+      <Divider className="divider" />
       <div
         style={{
           display: "flex",

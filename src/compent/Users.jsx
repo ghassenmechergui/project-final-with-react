@@ -25,28 +25,41 @@ export default function Users() {
       });
   }
   return (
-    <div>
-      <div className="user">
-        <div>
-          <Link to={"/home"}>
-            <ArrowBackIcon style={{ fontSize: "40px", margin: "20px" }} />
-          </Link>
-        </div>
-        <div className="tt">
+    <div className="user login">
+      <div>
+        <Link to={"/home"}>
+          <ArrowBackIcon
+            style={{
+              fontSize: "40px",
+              margin: " 5px 10px",
+              position: "absolute",
+            }}
+          />
+        </Link>
+
+        <div className="  content-login" style={{ marginTop: "30px" }}>
           <h2>Astro</h2>
         </div>
         <div className="list-user">
           {users.map((e) => {
-            console.log(e);
+            console.log(typeof e.user.profile_image);
             return (
               <ListItemButton
+                key={e.user.id}
                 className="li-user"
                 onClick={() => {
                   login(e);
                 }}
               >
                 <ListItemAvatar>
-                  <Avatar alt={e.user.name} src={e.user.profile_image} />
+                  <Avatar
+                    alt={e.user.name || ""}
+                    src={
+                      typeof e.user.profile_image != "object"
+                        ? e.user.profile_image
+                        : ""
+                    }
+                  />
                 </ListItemAvatar>
                 <ListItemText id={2} primary={e.user.name}></ListItemText>
               </ListItemButton>
