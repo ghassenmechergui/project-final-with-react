@@ -34,7 +34,7 @@ function App() {
           <ThemeProvider theme={theme}>
             <Routes>
               <Route path="/home" element={<Home />} />
-              <Route path="/commenter" element={<Comment />} />
+              <Route path="/commit" element={<Comment />} />
               <Route path="/profile" element={<Profil />} />
               <Route path="/users" element={<Users />} />
               <Route path="/login" element={<Login />} />

@@ -60,6 +60,7 @@ export default function Home() {
   });
 
   const { imageurl, setimageurl } = useImage();
+
   function hindelInputDaylouied(e) {
     const file = e.target.files[0];
     if (file) {
@@ -80,26 +81,36 @@ export default function Home() {
 
     if (end > 0.999 && counter.state == true) {
       setCounter({ ...counter, state: false });
-      axios
-        .get(`https://tarmeezacademy.com/api/v1/posts?page=${counter + 1}`)
-        .then((response) => {
-          console.log(response);
-          setCounter({ ...counter, state: false });
-          dispatch({ type: "next", payloed: { posts: response.data.data } });
-          setCounter({ ...counter, counter: counter.counter + 1 });
-        });
+      dispatch({
+        type: "next",
+        payloed: {
+          counter,
+          setCounter,
+        },
+      });
     }
   };
-
+  function refresh() {
+    dispatch({ type: "refresh" });
+  }
   return (
     <div>
       <div className=" header">
         <Typography variant="h3">Astro</Typography>
         <div className=" header-rigth">
-          <Badge badgeContent={4} color="primary">
+          <Badge
+            onClick={() => {
+              refresh();
+            }}
+            color="primary"
+          >
             <RefreshIcon style={{ fontSize: "30px" }}></RefreshIcon>
           </Badge>
-          <Link to="/profile">
+          <Link
+            to={`/profile?id=${
+              JSON.parse(localStorage.getItem("user")).user.id
+            } `}
+          >
             <PersonIcon style={{ fontSize: "1.5em" }} />
           </Link>
           <Link to={"/users"}>
@@ -114,7 +125,7 @@ export default function Home() {
           justifyContent: "space-between",
           alignItems: "center",
 
-          margin: "18px 10px",
+          margin: "70px 10px 10px",
         }}
       >
         <Avatar alt={user.user.name || "A"} sx={{ width: 46, height: 46 }} />

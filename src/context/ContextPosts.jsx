@@ -1,4 +1,3 @@
-import { containerClasses } from "@mui/material";
 import { createContext, useContext, useReducer } from "react";
 import reducerPosts from "../reducer/reducerPosts";
 const Posts = createContext([]);

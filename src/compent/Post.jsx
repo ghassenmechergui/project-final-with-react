@@ -12,8 +12,9 @@ import MailIcon from "@mui/icons-material/Mail";
 import Skeleton from "@mui/material/Skeleton";
 import { CardActions } from "@mui/material";
 import Divider from "@mui/material/Divider";
+import { Link } from "react-router-dom";
 export default function Post(props) {
-  const { loading = false } = props;
+  const { loading } = props;
   const { post = { username: "" } } = props;
 
   return (
@@ -74,7 +75,11 @@ export default function Post(props) {
         <Skeleton sx={{ height: 190 }} animation="wave" variant="rectangular" />
       ) : (
         <>
-          <CardMedia component="img" height="140" image={post.image || ""} />
+          {post.image ? (
+            <CardMedia component="img" height="140" image={post.image} />
+          ) : (
+            ""
+          )}
         </>
       )}
 
@@ -97,11 +102,13 @@ export default function Post(props) {
       <Divider />
       <CardActions>
         {loading ? null : (
-          <IconButton>
-            <Badge badgeContent={post.comments_count} color="primary">
-              <MailIcon />
-            </Badge>
-          </IconButton>
+          <Link to={`/commit?id=${5}`}>
+            <IconButton>
+              <Badge badgeContent={post.comments_count} color="primary">
+                <MailIcon />
+              </Badge>
+            </IconButton>
+          </Link>
         )}
       </CardActions>
     </Card>

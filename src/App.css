@@ -4,12 +4,24 @@
     padding: 0;
     box-sizing: border-box;
 }
+body{
+    margin: 0;
+    padding: 0;
+}
 .header{
     display: flex;
     justify-content: space-between;
-    padding: 0px 20px ;
+    padding: 6px 20px 6px;
     align-items: center;
-    margin-top: 00px !important;
+    margin-top: 10px !important;
+    position: fixed;
+    background-color: white !important;
+    top: -11px;
+    left: 0;
+    width: 100%;
+    z-index: 999999;
+    border-bottom: 2px solid black;
+   
 }
 
 .header-rigth{
@@ -48,6 +60,8 @@ font-size: 1.1em;
 }
 .divider{
     margin-top: -10px;
+   
+
 }
 .apploder h1{
     border: 7px solid #1dcaff;
@@ -141,4 +155,7 @@ font-size: 1.1em;
     width: 100%;
     padding: 0 40px;
     
+}
+.commit .top {
+    padding: 10px;
 }
